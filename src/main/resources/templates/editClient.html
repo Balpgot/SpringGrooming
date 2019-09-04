@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang=ru
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать</title>
+</head>
+<body>
+<table border="1">
+    <tr><th><a th:href="@{/}">Меню</a></th><th><a th:href="@{/clients}">Клиенты</a></th>
+        <th><a th:href="@{/orders}">Заказы</a></th><th><a th:href="@{/statistics}">Статистика</a></th></tr>
+</table>
+<br/>
+<form th:method="put">
+    <label for="name">Имя</label>
+    <input type="text" th:value="${client.getClientName()}" th:field="${client.clientName}"/>
+    <br/>
+    <label for="mobilePhone">Телефон</label>
+    <input type="text" th:value="${client.getMobilePhone()}" th:field="${client.mobilePhone}"/>
+    <br/>
+    <label for="poroda">Порода</label>
+    <input type="text" th:value="${client.getPoroda()}" th:field="${client.poroda}"/>
+    <br/>
+    <label for="petName">Имя питомца</label>
+    <input type="text" th:value="${client.getPetName()}" th:field="${client.petName}"/>
+    <br/>
+    <label for="behavior">Оценка</label>
+    <input type="text" th:value="${client.getBehavior()}" th:field="${client.behavior}"/>
+    <br/>
+    <input type="submit" value="Загрузить клиента"/>
+</form>
+<br/>
+<a th:href="@{/clients}">Назад</a>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню</title>
+</head>
+<body>
+    <h3>Навигация</h3>
+    <nav>
+        <ul>
+            <li><a th:href="@{/clients}">Клиенты</a></li>
+            <li><a th:href="@{/orders}">Заказы</a></li>
+            <li><a th:href="@{/statistics}">Статистика</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

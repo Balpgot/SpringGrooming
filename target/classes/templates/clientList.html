@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список клиентов</title>
+</head>
+<body>
+<table border="1">
+    <tr><th><a th:href="@{/}">Меню</a></th><th><a th:href="@{/clients}">Клиенты</a></th>
+        <th><a th:href="@{/orders}">Заказы</a></th><th><a th:href="@{/statistics}">Статистика</a></th></tr>
+</table>
+<br/>
+<table border="1">
+    <tr><th>ID</th><th>ИМЯ</th><th>НОМЕР</th><th>ПОРОДА</th><th>КЛИЧКА</th><th>ОЦЕНКА</th></tr>
+    <tr th:each="clientList:${clientList}"><td th:text="${clientList.getId()}"></td>
+        <td><a th:href="@{${#httpServletRequest.requestURI}+'/'+${clientList.getId()}}" th:text="${clientList.getClientName()}"></a></td>
+        <td th:text="${clientList.getMobilePhone()}"></td><td th:text="${clientList.getPoroda()}"></td>
+        <td th:text="${clientList.getPetName()}"></td><td th:text="${clientList.getBehavior()}"></td>
+    </tr>
+</table>
+<br/>
+<a th:href="@{/clients/add}">Добавить пользователя</a>
+<br/>
+<form method="post">
+    <label for="phone">Поиск клиента</label>
+    <input th:type="text" th:field="${client.mobilePhone}">
+    <br/>
+    <input type="submit" value="Найти клиента"/>
+</form>
+</body>
+</html>

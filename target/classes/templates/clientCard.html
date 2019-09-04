@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Карточка клиента</title>
+</head>
+<body>
+<table border="1">
+    <tr><th><a th:href="@{/}">Меню</a></th><th><a th:href="@{/clients}">Клиенты</a></th>
+        <th><a th:href="@{/orders}">Заказы</a></th><th><a th:href="@{/statistics}">Статистика</a></th></tr>
+</table>
+<br/>
+    <table border="1">
+        <tr><th>ID</th><th>ИМЯ</th><th>НОМЕР</th><th>ПОРОДА</th><th>КЛИЧКА</th><th>ОЦЕНКА</th></tr>
+        <tr><td th:text="${client.getId()}"></td><td th:text="${client.getClientName()}"></td><td th:text="${client.getMobilePhone()}"></td>
+            <td th:text="${client.getPoroda()}"></td><td th:text="${client.getPetName()}"></td><td th:text="${client.getBehavior()}"></td>
+        </tr>
+    </table>
+    <br/>
+    <a th:href="@{__${#httpServletRequest.requestURI}__/orders}">Заказы клиента</a>
+    <br/>
+    <a th:href="@{__${#httpServletRequest.requestURI}__/edit}">Редактировать</a>
+    <br/>
+    <form th:method="delete">
+        <button>Удалить клиента</button>
+    </form>
+</body>
+</html>

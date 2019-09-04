@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang=ru
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать</title>
+</head>
+<body><table border="1">
+    <tr><th><a th:href="@{/}">Меню</a></th><th><a th:href="@{/clients}">Клиенты</a></th>
+        <th><a th:href="@{/orders}">Заказы</a></th><th><a th:href="@{/statistics}">Статистика</a></th></tr>
+</table>
+<br/>
+<form th:method="put">
+    <label for="client">Телефон клиента</label>
+    <input type="text" th:value="${client.getMobilePhone()}" th:field="${client.mobilePhone}"/>
+    <br/>
+    <label for="date">Дата</label>
+    <input type="date" th:value="${order.getDate()}" th:field="${order.date}"/>
+    <br/>
+    <label for="time">Время</label>
+    <input type="time" th:value="${order.getTime()}" th:field="${order.time}"/>
+    <br/>
+    <label for="price">Стоимость</label>
+    <input type="number" th:value="${order.getPrice()}" th:field="${order.price}"/>
+    <br/>
+    <input type="submit" value="Добавить заказ"/>
+</form>
+<br/>
+<a th:href="@{/orders}">Назад</a>
+</body>
+</html>
