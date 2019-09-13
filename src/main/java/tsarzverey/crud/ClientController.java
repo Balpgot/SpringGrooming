@@ -36,14 +36,14 @@ public class ClientController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    String findClient(@RequestBody Client client){
+    ResponseEntity<Client> findClientByPhone(@RequestBody Client client){
         List<Client> clients = clientRepo.findAll();
         for(Client cli:clients){
             if(cli.getMobilePhone().endsWith(client.getMobilePhone())){
-                return "redirect:/clients/" + clientRepo.findClientByPhone(cli.getMobilePhone()).getId();
+                return new ResponseEntity<>(clientRepo.findClientByPhone(cli.getMobilePhone()),HttpStatus.FOUND);
             }
         }
-        return "redirect:/clients";
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/add")
@@ -54,9 +54,9 @@ public class ClientController {
 
     @PostMapping(value = "/add",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    String addClient(Client client){
+    ResponseEntity <Client> addClient(Client client){
         clientRepo.save(client);
-        return "redirect:/clients";
+        return new ResponseEntity<>(client,HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

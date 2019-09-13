@@ -8,8 +8,9 @@
 </head>
 <body>
 <table border="1">
-    <tr><th>ПОРОДА</th><th>КОЛИЧЕСТВО</th></tr>
-    <tr th:each="breed:${breeds}"><td th:text="${breed}"></td><td th:text="${amounts.get(breed)}"></td></tr>
+    <tr><th>ПОРОДА</th><th>КОЛИЧЕСТВО</th><th>В %</th></tr>
+    <tr th:each="breed:${breeds}"><td th:text="${breed}"></td><td th:text="${amounts.get(breed)}"></td>
+        <td th:text="$"></td></tr>
     <br/>
     <tr><td>ИТОГО:</td><td th:text="${sum}"></td></tr>
 </table>

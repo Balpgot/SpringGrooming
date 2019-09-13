@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +23,8 @@ public interface OrderRepository extends JpaRepository<NOrder, Long> {
 
     @Query("SELECT o FROM NOrder o WHERE o.client.poroda = :poroda")
     List<NOrder> findAllOrdersWithBreed(@Param("poroda") String poroda);
+
+    List<NOrder> findAllByDate(Date date);
 
     @Modifying
     @Query(value = "Insert into Client(client_id,name,phone,poroda,petname,behavior) " +
