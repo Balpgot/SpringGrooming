@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface
 ClientRepository extends JpaRepository<Client,Long> {
+    Client findClientByMobilePhoneEndingWith(String example);
 
     @Query("SELECT c FROM Client c WHERE c.mobilePhone = :phone")
     Client findClientByPhone(@Param("phone") String phone);
