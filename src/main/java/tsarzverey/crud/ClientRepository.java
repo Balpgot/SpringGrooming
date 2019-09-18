@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface
 ClientRepository extends JpaRepository<Client,Long> {
-    Client findClientByMobilePhoneEndingWith(String example);
 
     @Query("SELECT c FROM Client c WHERE c.mobilePhone = :phone")
     Client findClientByPhone(@Param("phone") String phone);
@@ -16,6 +15,6 @@ ClientRepository extends JpaRepository<Client,Long> {
     @Query("SELECT mobilePhone FROM Client")
     List<String> findPhones();
 
-    @Query("SELECT o FROM NOrder o WHERE o.client.mobilePhone = :mobilePhone")
+    @Query("SELECT o FROM NOrder o WHERE o.client.mobilePhone = :mobilePhone ORDER BY o.date")
     List<NOrder> findAllClientOrders(@Param("mobilePhone") String mobilePhone);
 }

@@ -2,79 +2,71 @@ package tsarzverey.crud;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
-@RestController
-@RequestMapping(path = "/clients", produces = "application/json")
-@CrossOrigin(origins = "*")
+@Controller
 public class ClientController {
 
-    private final ClientRepository clientRepo;
+    @Autowired
+    public final ClientRepository clientRepo;
 
     @Autowired
-    public ClientController(ClientRepository clientRepo){
-        this.clientRepo = clientRepo;
-        clientRepo.save(new Client(Long.parseLong("1"),"2","3","4","5","6"));
-        clientRepo.save(new Client(Long.parseLong("2"),"2","3","4","5","6"));
-        clientRepo.save(new Client(Long.parseLong("3"),"2","3","4","5","6"));
+    public ClientController(ClientRepository clientRepo){ this.clientRepo = clientRepo;
+        clientRepo.save(new Client(1L,"dasd","+79995359742","bull","dfdf","ydf"));
     }
 
-    @GetMapping
-    public List<Client> getAllClients() {
-        return clientRepo.findAll();
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    ResponseEntity<Client> findClientByPhone(@RequestBody Client client){
+    @GetMapping("/clients")
+    String all(Model model) {
         List<Client> clients = clientRepo.findAll();
-        for(Client cli:clients){
-            if(cli.getMobilePhone().endsWith(client.getMobilePhone())){
-                return new ResponseEntity<>(clientRepo.findClientByPhone(cli.getMobilePhone()),HttpStatus.FOUND);
+        model.addAttribute("clientList",clients);
+        model.addAttribute("client",new Client());
+        return "clientList";
+    }
+
+    @PostMapping(value = "/clients", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    String findClient(Client client){
+        List<String> phones = clientRepo.findPhones();
+        for(String phone:phones){
+            if(phone.endsWith(client.getMobilePhone())){
+                return "redirect:/clients/"+clientRepo.findClientByPhone(phone).getId();
             }
         }
-        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        return "redirect:/clients";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/clients/add")
     String addClientPage(Model model){
         model.addAttribute("newClient", new Client());
         return "addClient";
     }
 
-    @PostMapping(value = "/add",consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity <Client> addClient(Client client){
+    @PostMapping(value = "/clients/add",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    String addClient(Client client){
         clientRepo.save(client);
-        return new ResponseEntity<>(client,HttpStatus.CREATED);
+        return "redirect:/clients";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable Long id) {
-        Optional<Client> client = clientRepo.findById(id);
-        if(client.isPresent()){
-            return new ResponseEntity<>(client.get(), HttpStatus.OK);
+    @GetMapping("/clients/{id}")
+    String one(@PathVariable Long id,Model model) {
+        if(clientRepo.findById(id).isPresent()){
+            model.addAttribute("client", clientRepo.findById(id).get());
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return "clientCard";
     }
 
-    @GetMapping(value = "/{id}/edit")
+    @GetMapping(value = "/clients/{id}/edit")
     String editClient(@PathVariable Long id, Model model){
         model.addAttribute("client", clientRepo.findById(id).get());
         return "editClient";
     }
 
-    @PutMapping(value = "/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PutMapping(value = "/clients/{id}/edit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     String replaceClient(@PathVariable Long id, Client client) {
         Client oldClient = clientRepo.findById(id).get();
         oldClient.setClientName(client.getClientName());
@@ -87,7 +79,7 @@ public class ClientController {
         return "redirect:/clients/"+id;
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/clients/{id}")
     @Transactional
     String deleteClient(@PathVariable Long id){
         if(clientRepo.existsById(id)){
@@ -96,10 +88,9 @@ public class ClientController {
         return "redirect:/clients";
     }
 
-    @GetMapping("/{id}/orders")
+    @GetMapping("/clients/{id}/orders")
     String getOrders(@PathVariable Long id, Model model){
         String s = clientRepo.findById(id).get().getMobilePhone();
-        System.out.println(clientRepo.findAllClientOrders(s));
         model.addAttribute("orderList",clientRepo.findAllClientOrders(s));
         return "orderList";
     }

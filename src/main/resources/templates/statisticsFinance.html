@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Финансы</title>
+</head>
+<body>
+<table border="1">
+    <tr><th><a th:href="@{/}">Меню</a></th><th><a th:href="@{/clients}">Клиенты</a></th>
+        <th><a th:href="@{/orders}">Заказы</a></th><th><a th:href="@{/statistics}">Статистика</a></th></tr>
+</table>
+<br/>
+<label for="period">Период</label>
+<form>
+    <input list="period" th:field="${4}"/>
+    <br/>
+    <input type="submit" value="Добавить заказ"/>
+</form>
+
+<table border="1">
+    <tr><th>ДАТА</th>ПОСТУПЛЕНИЕ<th></th><th>В %</th></tr>
+    <tr th:each="breed:${breeds}"><td th:text="${breed}"></td><td th:text="${amounts.get(breed)}"></td>
+        <td th:text="${amounts.get(breed)/sum*100}"></td></tr>
+    <br/>
+    <tr><td>ИТОГО:</td><td th:text="${sum}"></td></tr>
+</table>
+</body>
+</html>

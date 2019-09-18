@@ -8,6 +8,11 @@
 </head>
 <body>
 <table border="1">
+    <tr><th><a th:href="@{/}">Меню</a></th><th><a th:href="@{/clients}">Клиенты</a></th>
+        <th><a th:href="@{/orders}">Заказы</a></th><th><a th:href="@{/statistics}">Статистика</a></th></tr>
+</table>
+<br/>
+<table border="1">
     <tr><th>ID</th><th>ИМЯ</th><th>НОМЕР</th><th>ПОРОДА</th><th>КЛИЧКА</th><th>ОЦЕНКА</th></tr>
     <tr th:each="foundClients:${foundClients}"><td th:text="${foundClients.getId()}"></td><td th:text="${foundClients.getClientName()}"></td><td th:text="${foundClients.getMobilePhone()}"></td>
         <td th:text="${foundClients.getPoroda()}"></td><td th:text="${foundClients.getPetName()}"></td><td th:text="${foundClients.getBehavior()}"></td>

@@ -1,17 +1,14 @@
 package tsarzverey.crud;
 
 import lombok.Data;
-import lombok.ToString;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
+import java.sql.Time;
+import java.time.*;
 
+/** TODO
+ *  Залить в Основу
+ */
 @Data
 @Entity
 @Table(name = "ORDERS_LIST")
@@ -23,7 +20,7 @@ public class NOrder {
     @JoinColumn(name = "phone", nullable = false)
     private Client client;
     private Date date;
-    private String time;
+    private Time time;
     private Integer price;
 
     NOrder(){}
@@ -32,55 +29,19 @@ public class NOrder {
         this.id = id;
         this.client = client;
         this.date = date;
-        this.time = time;
+        this.time = convertStringToTime(time);
         this.price = price;
     }
 
     NOrder(Long id, Date date, String time, Integer price){
         this.id = id;
         this.date = date;
-        this.time = time;
+        this.time = convertStringToTime(time);
         this.price = price;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public String getTimeZone(){
+        return "Europe/Moscow";
     }
 
     public String getFormattedDate(){
@@ -94,7 +55,11 @@ public class NOrder {
 
     public Date setFormattedDate(String date) {
         String[] strings = this.date.toString().split(".");
-        return Date.valueOf(LocalDate.now(ZoneId.of("Europe/Moscow")).getYear() + strings[1] + strings[0]);
+        return Date.valueOf(LocalDate.now(ZoneId.of(getTimeZone())).getYear() + strings[1] + strings[0]);
+    }
+
+    public Time convertStringToTime(String stringTime){
+        return Time.valueOf(stringTime+":00");
     }
 
 }

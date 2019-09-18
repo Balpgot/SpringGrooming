@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -21,10 +21,19 @@ public interface OrderRepository extends JpaRepository<NOrder, Long> {
     @Query("SELECT DISTINCT poroda FROM Client")
     Set<String> findAllBreeds();
 
+    @Query("SELECT price FROM NOrder")
+    List<Integer> findAllReceives();
+
+    @Query("SELECT o FROM NOrder o ORDER BY o.date")
+    List<NOrder> findAllInDateOrder();
+
+    @Query("SELECT o FROM NOrder o WHERE o.date = :date")
+    List<NOrder> findAllByDate(@Param("date")Date date);
+
     @Query("SELECT o FROM NOrder o WHERE o.client.poroda = :poroda")
     List<NOrder> findAllOrdersWithBreed(@Param("poroda") String poroda);
 
-    List<NOrder> findAllByDate(Date date);
+    List<NOrder> findAllByDateAfter(Date date);
 
     @Modifying
     @Query(value = "Insert into Client(client_id,name,phone,poroda,petname,behavior) " +

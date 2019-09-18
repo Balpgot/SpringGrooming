@@ -1,43 +1,54 @@
 package tsarzverey.crud;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
-@RestController
-@RequestMapping(path = "/statistics", produces = "application/json")
-@CrossOrigin(origins = "*")
+@Controller
 public class StatisticsController {
-    private OrderRepository orderRepo;
-    private ClientRepository clientRepo;
+    private final OrderRepository orderRepo;
+    private final ClientRepository clientRepo;
 
-    @Autowired
+
     StatisticsController(OrderRepository orderRepo, ClientRepository clientRepo){
         this.orderRepo = orderRepo;
         this.clientRepo = clientRepo;
     }
 
-    @GetMapping
-    String clientStatistics(Model model){
+    @GetMapping(value = "/statistics")
+    String statisticsNav(){
+        return "statisticsNav";
+    }
+
+    @GetMapping(value = "/statistics/animals")
+    String statisticsBreed(Model model){
         Set<String> breeds = orderRepo.findAllBreeds();
-        Map<String,Integer> amounts = new HashMap<>();
+        Map<String,Double> amounts = new HashMap<>();
         int sum = 0;
         for(String breed:breeds){
-            amounts.put(breed,orderRepo.findAllOrdersWithBreed(breed).size());
+            amounts.put(breed,orderRepo.findAllOrdersWithBreed(breed).size()+0.0);
             sum+=amounts.get(breed);
         }
         model.addAttribute("breeds",breeds);
         model.addAttribute("amounts",amounts);
         model.addAttribute("sum", sum);
-        return "statistics";
+        return "statisticsBreed";
+    }
+
+    @GetMapping(value = "/statistics/finances")
+    String statisticsFinances(Model model){
+        List<Integer> receives = orderRepo.findAllReceives();
+        int sum = 0;
+        for (Integer price:receives){
+            sum+=price;
+        }
+        model.addAttribute("sum", sum);
+        return "statisticsFinance";
     }
 }
