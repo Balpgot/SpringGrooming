@@ -39,4 +39,60 @@ public class Client {
         this.petName = petName;
         this.behavior = behavior;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+    }
+
+    public String getPoroda() {
+        return poroda;
+    }
+
+    public void setPoroda(String poroda) {
+        this.poroda = poroda;
+    }
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public void setPetName(String petName) {
+        this.petName = petName;
+    }
+
+    public String getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(String behavior) {
+        this.behavior = behavior;
+    }
+
+    public List<NOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<NOrder> orders) {
+        this.orders = orders;
+    }
 }
