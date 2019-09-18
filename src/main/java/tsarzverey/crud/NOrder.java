@@ -6,9 +6,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.*;
 
-/** TODO
- *  Залить в Основу
- */
 @Data
 @Entity
 @Table(name = "ORDERS_LIST")

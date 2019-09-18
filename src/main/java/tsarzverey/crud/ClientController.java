@@ -13,12 +13,11 @@ import java.util.List;
 @Controller
 public class ClientController {
 
-    @Autowired
     public final ClientRepository clientRepo;
 
     @Autowired
-    public ClientController(ClientRepository clientRepo){ this.clientRepo = clientRepo;
-        clientRepo.save(new Client(1L,"dasd","+79995359742","bull","dfdf","ydf"));
+    public ClientController(ClientRepository clientRepo){
+        this.clientRepo = clientRepo;
     }
 
     @GetMapping("/clients")

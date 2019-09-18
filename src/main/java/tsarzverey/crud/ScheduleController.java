@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** TODO
- *  Добавить контроллер в основу
- */
-
 @Controller
 public class ScheduleController {
     private final String timeZone = "Europe/Moscow";
@@ -48,10 +44,6 @@ public class ScheduleController {
                     result.add(orderRepo.findAllByDate(Date.valueOf(LocalDate.now(ZoneId.of(timeZone)).plusDays(i))));
                 }
                 break;
-        }
-        System.out.println("ЫЫЫЫЫЫЫЫЫ");
-        for(int i = 0; i<result.size(); i++){
-            System.out.println(result.get(i));
         }
         return result;
     }

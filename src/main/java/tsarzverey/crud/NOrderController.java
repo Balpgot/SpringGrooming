@@ -18,11 +18,6 @@ public class NOrderController {
     @Autowired
     public NOrderController(OrderRepository orderRepo){
         this.orderRepo = orderRepo;
-        Client client = new Client(1L,"dasd","+79995359742","bull","dfdf","ydf");
-        orderRepo.save(new NOrder(Long.parseLong("1"),client, Date.valueOf("2019-9-16"),"16:42",1200));
-        orderRepo.save(new NOrder(Long.parseLong("2"),client, Date.valueOf("2019-9-17"),"16:30",1200));
-        orderRepo.save(new NOrder(Long.parseLong("1"),client,Date.valueOf("2019-9-17"),"17:42",1200));
-        orderRepo.save(new NOrder(Long.parseLong("3"),client,Date.valueOf("2019-9-18"),"16:42",1200));
     }
 
     @GetMapping("/orders")
